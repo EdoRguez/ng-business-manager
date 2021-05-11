@@ -1,0 +1,12 @@
+<br>
+<h1 class="text-center">Pedidos</h1>
+<p>Para agregar un pedido utiliza el botón "Agregar"</p>
+<hr>
+<app-options-orders></app-options-orders>
+<hr>
+<h3>Lista de Pedidos:</h3>
+<div *ngIf="isLoading" class="d-flex justify-content-center">
+    <mat-spinner></mat-spinner>
+</div>
+<app-orders-table [ordersList]="orders"></app-orders-table>
+<br>

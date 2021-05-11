@@ -1,0 +1,98 @@
+<br>
+<h1 class="text-center">Pedido</h1>
+<hr>
+
+<mat-horizontal-stepper [linear]="true" #stepper class="box-style">
+    <mat-step [stepControl]="formOrders1">
+      <form [formGroup]="formOrders1">
+        <ng-template matStepLabel>Datos del Pedido</ng-template>
+        <div class="row">
+          <div class="col-sm-12 col-md-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Número de Tanda</mat-label>
+              <input matInput placeholder="Nº" type="number" min="0" max="999" formControlName="serie" required>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-12 col-md-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Fecha de Pedido</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="initialDate">
+              <mat-datepicker-toggle matSuffix [for]="picker" required></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field> 
+          </div>
+          <div class="col-sm-12 col-md-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Fecha Estimada</mat-label>
+              <input matInput [matDatepicker]="picker2" formControlName="endDate">
+              <mat-datepicker-toggle matSuffix [for]="picker2" required></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field> 
+          </div>
+          <div class="col-sm-12 col-md-3">
+            <mat-form-field appearance="fill">
+              <mat-label>País de Origen</mat-label>
+              <mat-select formControlName="country">
+                <mat-option value=""></mat-option>
+                <mat-option value="China">🇨🇳 China</mat-option>
+                <mat-option value="USA">🇺🇸 Estados Unidos</mat-option>
+                <mat-option value="Venezuela">🇻🇪 Venezuela</mat-option>
+              </mat-select>
+            </mat-form-field> 
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <button matStepperPrevious class="btn btn-danger" [routerLink]="['/main/orders']">Regresar</button>
+          <button matStepperNext class="btn btn-primary">Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="formOrders2">
+      <form [formGroup]="formOrders2">
+        <ng-template matStepLabel>Datos del Producto</ng-template>
+        <div class="row">
+          <div class="col-sm-12 col-md-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Producto</mat-label>
+              <mat-select formControlName="productName" required>
+                <mat-option value=""></mat-option>
+                <mat-option [value]="product.name" *ngFor="let product of productList">{{ product.name }}</mat-option>
+              </mat-select>
+            </mat-form-field> 
+          </div>
+          <div class="col-sm-12 col-md-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Precio Unitario</mat-label>
+              <input matInput type="number" class="example-right-align" formControlName="price" required>
+              <span matPrefix>$&nbsp;</span>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-12 col-md-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Cantidad Solicitada</mat-label>
+              <input matInput type="number" class="example-right-align" formControlName="quantity" pattern="^[0-9]*$" required>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-12 col-md-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Costo Envío Total</mat-label>
+              <input matInput type="number" class="example-right-align" formControlName="deliveryPrice" required>
+            </mat-form-field>
+          </div>
+          <div *ngIf="validateQuantities()" class="col-sm-12 col-md-6 offset-md-3">
+            <p>
+              <ngb-alert>
+                <b>Precio Total:</b>
+                <br>
+                $ {{ this.formOrders2.get('price').value }} * {{ this.formOrders2.get('quantity').value }} Unidad(es) + $ {{ this.formOrders2.get('deliveryPrice').value }} Envío = <b>$ {{ ( (this.formOrders2.get('price').value * this.formOrders2.get('quantity').value) + this.formOrders2.get('deliveryPrice').value).toFixed(2) }}</b>
+              </ngb-alert>
+            </p>
+          </div>
+        </div>   
+        <div class="d-flex justify-content-between">
+          <button matStepperPrevious class="btn btn-primary">Regresar</button>
+          <button matStepperNext class="btn btn-primary" (click)="onSaveForm()" [disabled]="!this.formOrders1.valid || !this.formOrders2.valid">Guardar</button>
+        </div>
+      </form>
+    </mat-step>
+</mat-horizontal-stepper>

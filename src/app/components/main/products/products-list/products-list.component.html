@@ -1,0 +1,5 @@
+<mat-selection-list #productList [multiple]="false" (selectionChange)="onSelectionChange($event)" class="box-style">
+    <mat-list-option *ngFor="let product of products" [value]="product.key + '|' +product.name">
+      {{product.name}}
+    </mat-list-option>
+</mat-selection-list>

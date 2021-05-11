@@ -1,0 +1,9 @@
+<br>
+<h1 class="text-center">Control de Ganancia de Pedidos</h1>
+<hr>
+<h3>Ganancia de Pedidos:</h3>
+<div *ngIf="isLoading" class="d-flex justify-content-center">
+    <mat-spinner></mat-spinner>
+</div>
+<app-home-table [ordersList]="orders"></app-home-table>
+<br>

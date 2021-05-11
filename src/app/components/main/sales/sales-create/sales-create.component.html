@@ -1,0 +1,83 @@
+<div class="container">
+    <br>
+    <h1 class="text-center">Venta</h1>
+    <hr>
+    <form [formGroup]="formSales" (ngSubmit)="onSubmitForm()" autocomplete="off">            
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 box-style p-4">
+                <div class="row">
+                    <div class="col-sm-12 col-md-3">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Producto</mat-label>
+                            <mat-select formControlName="product" required>
+                                <mat-option value=""></mat-option>
+                              <mat-option *ngFor="let product of productList" [value]="product.name">{{ product.name }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Fecha Entrega</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="deliveryDate" required>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>                          
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Precio</mat-label>
+                            <input matInput required type="number" formControlName="price" maxlength="12" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Cantidad</mat-label>
+                            <input matInput required type="number" formControlName="quantity" maxlength="9" pattern="^[0-9]*$" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Tipo de Venta</mat-label>
+                            <mat-select formControlName="type" required>
+                                <mat-option value=""></mat-option>
+                                <mat-option value="Cash">Cash</mat-option>
+                                <mat-option value="Airtm">Airtm</mat-option>
+                                <mat-option value="Bolívares">Bolívares</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Dirección/Zona de Entrega</mat-label>
+                            <textarea matInput formControlName="address" maxlength="100" required></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Descripción (opcional)</mat-label>
+                            <textarea matInput formControlName="description" maxlength="200"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-12 col-md-3 mt-4">                      
+                        <mat-slide-toggle formControlName="isDelivery" color="primary">Es Delivery</mat-slide-toggle>                        
+                    </div>
+                    <div *ngIf="validateQuantities()" class="col-sm-12 col-md-6 offset-md-3">
+                        <p>
+                            <ngb-alert>
+                              <b>Precio Total:</b>
+                              <br>
+                              $ {{ this.formSales.get('price').value }} * {{ this.formSales.get('quantity').value }} Unidad(es) = <b>$ {{ (this.formSales.get('price').value * this.formSales.get('quantity').value).toFixed(2) }}</b>
+                            </ngb-alert>
+                          </p>
+                    </div>
+                    <div class="col-sm-12 mt-4">
+                        <div class="d-flex justify-content-between">
+                            <button type="button" class="btn btn-danger" [routerLink]="['/main/sales']">Regresar</button>
+                            <button type="submit" class="btn btn-primary" [disabled]="!formSales.valid">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

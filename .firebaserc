@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "business-manager-b1b98": {
+      "hosting": {
+        "BusinessManager": [
+          "business-manager-b1b98"
+        ]
+      }
+    }
+  }
+}

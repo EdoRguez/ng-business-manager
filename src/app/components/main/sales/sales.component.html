@@ -1,0 +1,11 @@
+<br>
+<h1 class="text-center">Ventas</h1>
+<p>Para agregar una venta utiliza el botón "Agregar"</p>
+<hr>
+<app-sales-options></app-sales-options>
+<hr>
+<h3>Lista de Ventas:</h3>
+<div *ngIf="isLoading" class="d-flex justify-content-center">
+    <mat-spinner></mat-spinner>
+</div>
+<app-sales-list [sales]="salesList"></app-sales-list>

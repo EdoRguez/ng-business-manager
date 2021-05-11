@@ -1,0 +1,36 @@
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let sale of sales">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ sale.product }}
+        </mat-panel-title>
+        <mat-panel-description>
+            Total Venta: ${{ sale.price * sale.quantity }}
+        </mat-panel-description>
+        <mat-panel-description>
+          {{ sale.type }}
+        </mat-panel-description>
+        <mat-panel-description>
+          {{ sale.deliveryDate | date: 'dd/MM/yyyy' }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <hr>
+      <b>Precio Unitario:</b> ${{ sale.price }}<br>
+      <hr>
+      <b>Cantidad(es):</b> {{ sale.quantity }}<br>
+      <hr>
+      <b>Delivery:</b> {{ (sale.isDelivery) ? 'Si' : 'No' }}<br>
+      <hr>
+      <b>Zona Entrega:</b> {{ sale.address }}<br>
+      <hr>
+      <div *ngIf="sale.description">
+        <b>Descripción:</b> {{ sale.description }} <br>
+        <hr>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-primary" [routerLink]="['/main/sales/create', sale.key]">Editar</button>
+        <button class="btn btn-danger ml-2" (click)="open(sale.key)">Borrar</button>
+      </div>
+    </mat-expansion-panel>
+</mat-accordion>
+  
